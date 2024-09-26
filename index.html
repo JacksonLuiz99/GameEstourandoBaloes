@@ -1,36 +1,38 @@
 <!DOCTYPE HTML>
 <html lang="pt-br">
-	<head>
-		<meta charset="UTF-8">
 
-		<title>Estourando balões</title>
+<head>
+	<meta charset="UTF-8">
 
-		<script language='Javascript'>
+	<title>Estourando balões</title>
 
-			function iniciarJogo(){
-				var nivel_jogo = document.getElementById('nivel_jogo').value;
+	<script language='Javascript'>
 
-				window.location.href = 'jogo.html?'+ nivel_jogo;
-				alert(nivel_jogo);
-			}
+		function iniciarJogo() {
+			var nivel_jogo = document.getElementById('nivel_jogo').value;
 
-			
-		</script>
-	</head>
+			window.location.href = 'jogo.html?' + nivel_jogo;
+			alert(nivel_jogo);
+		}
 
-	<body>
-		<div>
-			<p>
-				<b>Nível : </b>
-				<select id="nivel_jogo">
-					<option value="1">Easy</option>
-					<option value="2">Medium</option>
-					<option value="3">Hard</option>
-				</select>
-			</p> <br>
-			<img src="img/iniciar.png" alt="iniciar o Jogo" onclick="iniciarJogo()">
-		</div>
 
-	</body>
-	
+	</script>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<div>
+		<p>
+			<b>Escolha o nível de dificuldade : </b>
+			<select id="nivel_jogo">
+				<option value="1">Easy</option>
+				<option value="2">Medium</option>
+				<option value="3">Hard Core</option>
+			</select>
+		</p> <br>
+		<img src="img/iniciar.png" alt="iniciar o Jogo" onclick="iniciarJogo()">
+	</div>
+
+</body>
+
 </html>

@@ -1,45 +1,45 @@
 //variável que armazena a chamada da função timerout
-var timerId = null; 
+var timerId = null;
 
-function iniciarJogo(){
+function iniciarJogo() {
 
-var url = window.location.search;
+    var url = window.location.search;
 
-var nivel_jogo = url.replace("?", "");
+    var nivel_jogo = url.replace("?", "");
 
-var tempo_segundos = 0;
+    var tempo_segundos = 0;
 
-if(nivel_jogo == 1)  {//Easy -> 120 segundos
-    tempo_segundos = 120;
+    if (nivel_jogo == 1) {//Easy -> 120 segundos
+        tempo_segundos = 120;
+    }
+    if (nivel_jogo == 2) {//Medium -> 60 Segundos
+        tempo_segundos = 60;
+    }
+    if (nivel_jogo == 3) {//Hard -> Segungos
+        tempo_segundos = 30;
+    }
+
+    //inserindo segundos no span
+    document.getElementById('cronometro').innerHTML = tempo_segundos;
+
+    // Quantidade de balões
+
+    var quantidade_baloes = 80;
+
+    criar_baloes(quantidade_baloes);
+
+    //imprimir quantidade de balões inteiros
+    document.getElementById('baloes_inteiros').innerHTML = quantidade_baloes;
+    document.getElementById('baloes_estourados').innerHTML = 0;
+
+    contagem_tempo(tempo_segundos + 1)
+
 }
-if(nivel_jogo == 2)  {//Medium -> 60 Segundos
-    tempo_segundos = 60;
-}
-if(nivel_jogo == 3)  {//Herd -> Segungos
-    tempo_segundos = 30;
-}
 
-//inserindo segundos no span
-document.getElementById('cronometro').innerHTML = tempo_segundos;
+function contagem_tempo(segundos) {
 
-// Quantidade de balões
-
-var quantidade_baloes = 80;
-
-criar_baloes(quantidade_baloes);
-
-//imprimir quantidade de balões inteiros
-document.getElementById('baloes_inteiros').innerHTML = quantidade_baloes;
-document.getElementById('baloes_estourados').innerHTML = 0;
-
-contagem_tempo(tempo_segundos + 1)
-
-}
-
-function contagem_tempo(segundos){
-
-    segundos = segundos -1;
-    if(segundos== -1){
+    segundos = segundos - 1;
+    if (segundos == -1) {
         clearTimeout(timerId); //para a execução da função do settimeout
         game_over();
         return false;
@@ -47,29 +47,29 @@ function contagem_tempo(segundos){
 
     document.getElementById('cronometro').innerHTML = segundos;
 
-   timerId = setTimeout("contagem_tempo("+segundos+")", 1000);
+    timerId = setTimeout("contagem_tempo(" + segundos + ")", 1000);
 
 }
 
-function game_over(){
+function game_over() {
     remove_eventos_baloes();
     alert('Fim de jogo, O trouxa não estourou os balões a tempo, HAHAHA!!!');
-}situacao_jogo:
+} situacao_jogo:
 
-function criar_baloes(quantidade_baloes){
+function criar_baloes(quantidade_baloes) {
 
-    for(var i = 1; i <= quantidade_baloes; i++){
+    for (var i = 1; i <= quantidade_baloes; i++) {
         var balao = document.createElement("img");
         balao.src = 'img/balao_azul_pequeno.png';
         balao.style.margin = '10px';
         balao.id = 'b' + i;
-        balao.onclick = function(){estourar(this);};
+        balao.onclick = function () { estourar(this); };
 
         document.getElementById('cenario').appendChild(balao);
     }
 }
 
-function estourar(e){
+function estourar(e) {
 
     var id_balao = e.id;
 
@@ -80,12 +80,12 @@ function estourar(e){
 
 }
 
-function pontuacao(acao){
+function pontuacao(acao) {
     var baloes_inteiros = document.getElementById('baloes_inteiros').innerHTML;
     var baloes_estourados = document.getElementById('baloes_estourados').innerHTML;
 
     baloes_inteiros = parseInt(baloes_inteiros);
-    baloes_estourados = parseInt (baloes_estourados);
+    baloes_estourados = parseInt(baloes_estourados);
 
     baloes_inteiros = baloes_inteiros + acao;
     baloes_estourados = baloes_estourados - acao;
@@ -97,24 +97,24 @@ function pontuacao(acao){
 
 }
 
-function situacao_jogo(baloes_inteiros){
-    if(baloes_inteiros == 0){
+function situacao_jogo(baloes_inteiros) {
+    if (baloes_inteiros == 0) {
         alert('Parabéns, Você é demais!!!');
         parar_game();
     }
 }
 
-function parar_game(){
+function parar_game() {
     clearTimeout(timerId);
 }
 
 function remove_eventos_baloes() {
     var i = 1; //contado para recuperar balões por id
-    
+
     //percorre o lementos de acordo com o id e só irá sair do laço quando não houver correspondência com elemento
-    while(document.getElementById('b'+i)) {
+    while (document.getElementById('b' + i)) {
         //retira o evento onclick do elemnto
-        document.getElementById('b'+i).onclick = '';
+        document.getElementById('b' + i).onclick = '';
         i++; //faz a iteração da variávei i
     }
 }
