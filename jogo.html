@@ -1,67 +1,153 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Estourando balões</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              premium: {
+                dark: "#0f172a",
+                card: "#1e293b",
+                gold: "#fbbf24",
+              },
+            },
+            fontFamily: {
+              outfit: ["Outfit", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <script src="jogo.js"></script>
+    <style>
+      body {
+        font-family: "Outfit", sans-serif;
+      }
+      #cenario img {
+        transition: transform 0.2s;
+        cursor: crosshair;
+      }
+      #cenario img:hover {
+        transform: scale(1.15);
+      }
+    </style>
+  </head>
 
-<head>
-	<meta charset="UTF-8">
+  <body
+    onload="iniciarJogo()"
+    class="bg-premium-dark text-slate-100 min-h-screen flex items-center justify-center p-4 lg:p-8"
+  >
+    <div
+      class="flex flex-col lg:flex-row gap-8 w-full max-w-6xl animate-in fade-in duration-700"
+    >
+      <!-- Painel de Status -->
+      <div
+        class="lg:w-72 flex flex-col gap-6 bg-premium-card p-6 rounded-2xl shadow-xl border border-slate-700/50 h-fit"
+      >
+        <div
+          class="flex items-center justify-between p-4 bg-slate-900/50 rounded-xl border border-blue-500/20"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              src="img/balao_azul_grande.png"
+              class="w-10 h-10 object-contain"
+              alt="Balão azul inteiro"
+            />
+            <span
+              class="text-xs font-semibold text-slate-400 uppercase tracking-wider"
+              >Inteiros</span
+            >
+          </div>
+          <span id="baloes_inteiros" class="text-3xl font-bold text-blue-400"
+            >0</span
+          >
+        </div>
 
-	<title>Estourando balões</title>
+        <div
+          class="flex items-center justify-between p-4 bg-slate-900/50 rounded-xl border border-pink-500/20"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              src="img/balao_azul_grande_estourado.png"
+              class="w-10 h-10 object-contain"
+              alt="Balão azul estourado"
+            />
+            <span
+              class="text-xs font-semibold text-slate-400 uppercase tracking-wider"
+              >Estourados</span
+            >
+          </div>
+          <span id="baloes_estourados" class="text-3xl font-bold text-pink-400"
+            >0</span
+          >
+        </div>
 
-	<script src="jogo.js"></script>
+        <!-- Cronômetro Customizado -->
+        <div
+          class="relative flex flex-col items-center justify-center p-8 bg-slate-900 rounded-2xl border-2 border-slate-800 overflow-hidden group"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-red-500/10 to-transparent opacity-50"
+          ></div>
+          <img
+            src="img/cronometro.png"
+            class="w-16 h-16 mb-2 opacity-80 group-hover:scale-110 transition-transform duration-500"
+            alt="Cronômetro"
+          />
+          <span
+            id="cronometro"
+            class="text-5xl font-black text-red-500 relative z-10 lining-nums"
+            >00</span
+          >
+          <span
+            class="text-[10px] font-bold text-red-500/60 uppercase tracking-[0.2em] mt-1"
+            >segundos</span
+          >
+        </div>
 
-	<link rel="stylesheet" href="style.css">
+        <a href="index.html" class="mt-4">
+          <button
+            class="w-full py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-all border border-slate-700 flex items-center justify-center gap-2 group"
+          >
+            <svg
+              class="w-4 h-4 group-hover:-rotate-45 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              ></path>
+            </svg>
+            Reiniciar
+          </button>
+        </a>
+      </div>
 
-</head>
-
-<body onload="iniciarJogo()" style="text-align: center; justify-content: center; align-items: center;">
-	<div class="todo-container">
-		<div
-			style="float: left; width: auto; height: 500px; background: #fff; border: solid 1px #a2a2a2; margin-right: 5px;">
-			<table border="0">
-				<tr>
-					<td>
-						<img src="img/balao_azul_grande.png">
-					</td>
-					<td>
-						<span id="baloes_inteiros" style="font-size: 40px;"></span>
-					</td>
-				</tr>
-			</table>
-			<br>
-
-			<table border="0">
-				<tr>
-					<td>
-						<img src="img/balao_azul_grande_estourado.png">
-					</td>
-					<td>
-						<span id="baloes_estourados" style="font-size: 40px;"></span>
-					</td>
-				</tr>
-			</table>
-			<br>
-
-			<table border="0" style="width: 140px; height: 132px;">
-				<tr>
-					<td style="background: url(img/cronometro.png); text-align: center;">
-						<span id="cronometro" style="color: red; font-size: 25px;"></span>
-					</td>
-
-				</tr>
-			</table>
-			<table>
-				<tr>
-					<td>
-						<a href="index.html"><button>Jogue Novamente</button></a>
-					</td>
-				</tr>
-			</table>
-
-		</div>
-		<div id="cenario"
-			style="float: left; width: 600px; height: 500px; background: url(img/cenario.png); background-position: bottom;">
-
-		</div>
-	</div>
-</body>
-
+      <!-- Cena do Jogo -->
+      <div
+        id="cenario"
+        class="flex-1 bg-slate-900/40 rounded-3xl border-2 border-slate-800/50 p-6 min-h-[500px] shadow-inner backdrop-blur-sm flex flex-wrap content-start justify-center gap-2 overflow-auto"
+        style="
+          background-image: url(&quot;img/cenario.png&quot;);
+          background-size: cover;
+          background-position: bottom;
+          background-blend-mode: overlay;
+        "
+      ></div>
+    </div>
+  </body>
 </html>

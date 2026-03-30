@@ -1,38 +1,101 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-	<meta charset="UTF-8">
+    <title>Estourando balões</title>
 
-	<title>Estourando balões</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              premium: {
+                dark: "#0f172a",
+                card: "#1e293b",
+                gold: "#fbbf24",
+              },
+            },
+            fontFamily: {
+              outfit: ["Outfit", "sans-serif"],
+            },
+          },
+        },
+      };
 
-	<script language='Javascript'>
+      function iniciarJogo() {
+        var nivel_jogo = document.getElementById("nivel_jogo").value;
+        window.location.href = "jogo.html?" + nivel_jogo;
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Outfit", sans-serif;
+      }
+    </style>
+  </head>
 
-		function iniciarJogo() {
-			var nivel_jogo = document.getElementById('nivel_jogo').value;
+  <body
+    class="bg-premium-dark text-slate-100 min-h-screen flex items-center justify-center p-4"
+  >
+    <div
+      class="bg-premium-card p-10 rounded-2xl shadow-2xl border border-slate-700/50 max-w-md w-full text-center space-y-8 animate-in fade-in zoom-in duration-500"
+    >
+      <div class="space-y-2">
+        <h1
+          class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent"
+        >
+          Estourando Balões
+        </h1>
+        <p class="text-slate-400 text-sm">Teste sua rapidez e precisão!</p>
+      </div>
 
-			window.location.href = 'jogo.html?' + nivel_jogo;
-			alert(nivel_jogo);
-		}
+      <div class="space-y-4">
+        <label
+          for="nivel_jogo"
+          class="block text-sm font-semibold text-slate-300"
+          >Escolha o nível de dificuldade</label
+        >
+        <select
+          id="nivel_jogo"
+          class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3 transition-all"
+        >
+          <option value="1">Easy (120s)</option>
+          <option value="2" selected>Medium (60s)</option>
+          <option value="3">Hard Core (30s)</option>
+        </select>
+      </div>
 
+      <div class="pt-4">
+        <button
+          onclick="iniciarJogo()"
+          class="group relative w-full inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+        >
+          <span class="relative">Iniciar Jogo</span>
+          <svg
+            class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 5l7 7-7 7M5 5l7 7-7 7"
+            ></path>
+          </svg>
+        </button>
+      </div>
 
-	</script>
-	<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-	<div>
-		<p>
-			<b>Escolha o nível de dificuldade : </b>
-			<select id="nivel_jogo">
-				<option value="1">Easy</option>
-				<option value="2">Medium</option>
-				<option value="3">Hard Core</option>
-			</select>
-		</p> <br>
-		<img src="img/iniciar.png" alt="iniciar o Jogo" onclick="iniciarJogo()">
-	</div>
-
-</body>
-
+      <p class="text-xs text-slate-500 italic">Desafie seus reflexos agora.</p>
+    </div>
+  </body>
 </html>

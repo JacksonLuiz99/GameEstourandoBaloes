@@ -1,91 +1,80 @@
 //variável que armazena a chamada da função timerout
-var timerId = null;
+let timerId = null; 
 
 function iniciarJogo() {
+    const url = globalThis.location.search;
+    const nivel_jogo = url.replace("?", "");
 
-    var url = window.location.search;
+    let tempo_segundos = 0;
+    let quantidade_baloes;
 
-    var nivel_jogo = url.replace("?", "");
-
-    var tempo_segundos = 0;
-
-    if (nivel_jogo == 1) {//Easy -> 120 segundos
+    if (nivel_jogo == 1) { // Easy
         tempo_segundos = 120;
-    }
-    if (nivel_jogo == 2) {//Medium -> 60 Segundos
+        quantidade_baloes = 60;
+    } else if (nivel_jogo == 2) { // Medium
         tempo_segundos = 60;
-    }
-    if (nivel_jogo == 3) {//Hard -> Segungos
+        quantidade_baloes = 80;
+    } else if (nivel_jogo == 3) { // Hard Core
         tempo_segundos = 30;
+        quantidade_baloes = 100;
     }
 
-    //inserindo segundos no span
     document.getElementById('cronometro').innerHTML = tempo_segundos;
-
-    // Quantidade de balões
-
-    var quantidade_baloes = 80;
-
     criar_baloes(quantidade_baloes);
 
-    //imprimir quantidade de balões inteiros
     document.getElementById('baloes_inteiros').innerHTML = quantidade_baloes;
     document.getElementById('baloes_estourados').innerHTML = 0;
 
-    contagem_tempo(tempo_segundos + 1)
-
+    contagem_tempo(tempo_segundos + 1);
 }
 
 function contagem_tempo(segundos) {
-
     segundos = segundos - 1;
+
     if (segundos == -1) {
-        clearTimeout(timerId); //para a execução da função do settimeout
+        clearTimeout(timerId);
         game_over();
         return false;
     }
 
     document.getElementById('cronometro').innerHTML = segundos;
-
-    timerId = setTimeout("contagem_tempo(" + segundos + ")", 1000);
-
+    timerId = setTimeout(() => contagem_tempo(segundos), 1000);
 }
 
 function game_over() {
     remove_eventos_baloes();
-    alert('Fim de jogo, O trouxa não estourou os balões a tempo, HAHAHA!!!');
-} situacao_jogo:
+    alert('Fim de jogo! Você não conseguiu estourar todos os balões a tempo.');
+}
 
 function criar_baloes(quantidade_baloes) {
-
-    for (var i = 1; i <= quantidade_baloes; i++) {
-        var balao = document.createElement("img");
+    const cenario = document.getElementById('cenario');
+    for (let i = 1; i <= quantidade_baloes; i++) {
+        const balao = document.createElement("img");
         balao.src = 'img/balao_azul_pequeno.png';
-        balao.style.margin = '10px';
+        balao.className = 'w-12 h-16 object-contain m-2 hover:scale-110 transition-transform cursor-pointer';
         balao.id = 'b' + i;
+        balao.alt = 'Balão azul inteiro';
         balao.onclick = function () { estourar(this); };
 
-        document.getElementById('cenario').appendChild(balao);
+        cenario.appendChild(balao);
     }
 }
 
 function estourar(e) {
-
-    var id_balao = e.id;
-
-    document.getElementById(id_balao).setAttribute("onclick", "");
-    document.getElementById(id_balao).src = 'img/balao_azul_pequeno_estourado.png';
+    const id_balao = e.id;
+    const element = document.getElementById(id_balao);
+    
+    element.setAttribute("onclick", "");
+    element.src = 'img/balao_azul_pequeno_estourado.png';
+    element.alt = 'Balão azul estourado';
+    element.classList.add('opacity-50', 'grayscale-[0.5]');
 
     pontuacao(-1);
-
 }
 
 function pontuacao(acao) {
-    var baloes_inteiros = document.getElementById('baloes_inteiros').innerHTML;
-    var baloes_estourados = document.getElementById('baloes_estourados').innerHTML;
-
-    baloes_inteiros = parseInt(baloes_inteiros);
-    baloes_estourados = parseInt(baloes_estourados);
+    let baloes_inteiros = Number.parseInt(document.getElementById('baloes_inteiros').innerHTML);
+    let baloes_estourados = Number.parseInt(document.getElementById('baloes_estourados').innerHTML);
 
     baloes_inteiros = baloes_inteiros + acao;
     baloes_estourados = baloes_estourados - acao;
@@ -94,12 +83,10 @@ function pontuacao(acao) {
     document.getElementById('baloes_estourados').innerHTML = baloes_estourados;
 
     situacao_jogo(baloes_inteiros);
-
 }
 
 function situacao_jogo(baloes_inteiros) {
     if (baloes_inteiros == 0) {
-        alert('Parabéns, Você é demais!!!');
         parar_game();
     }
 }
@@ -109,9 +96,8 @@ function parar_game() {
 }
 
 function remove_eventos_baloes() {
-    var i = 1; //contado para recuperar balões por id
-
-    //percorre o lementos de acordo com o id e só irá sair do laço quando não houver correspondência com elemento
+    let i = 1;  //contado para recuperar balões por id //percorre o lementos de acordo com o id e só irá sair do laço quando não houver correspondência com elemento
+        //percorre o lementos de acordo com o id e só irá sair do laço quando não houver correspondência com elemento
     while (document.getElementById('b' + i)) {
         //retira o evento onclick do elemnto
         document.getElementById('b' + i).onclick = '';
